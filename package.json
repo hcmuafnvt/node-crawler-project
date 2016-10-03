@@ -9,6 +9,15 @@
   "author": "Toan NGUYEN",
   "license": "ISC",
   "dependencies": {
-    "simplecrawler": "^1.0.1"
+    "cheerio": "^0.22.0",
+    "simplecrawler": "^1.0.1",
+    "body-parser": "^1.15.0",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "express-ejs-layouts": "^2.0.0",
+    "getport": "^0.1.0",
+    "mongoose": "^4.4.11",
+    "winston": "^2.2.0",
+    "winston-daily-rotate-file": "^1.0.1"
   }
 }

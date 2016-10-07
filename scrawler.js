@@ -1,6 +1,7 @@
 var Crawler = require("simplecrawler"),
     cheerio = require('cheerio'),
-    fs = require('fs');
+    fs = require('fs'),
+    toMarkdown = require('to-markdown');
 
 var crawler = new Crawler("http://vnexpress.net/photo/thoi-su/hien-truong-xe-taxi-no-tung-tren-duong-3478068.html");
 
@@ -9,9 +10,18 @@ crawler.on("fetchcomplete", function(queueItem, responseBuffer, response) {
     // console.log("It was a resource of type %s", response.headers['content-type']);
 
     var $ = cheerio.load(responseBuffer);
-    var result = '';
-    result += 'title: ' + $('.title_news h1').html();
-    result += '\n content: ' + $('#article_content').html();
+    var $content = $('#article_content');
+    $content.find('a[href="javascript:void(0)"]').remove();
+    var result = toMarkdown($content.html(), {
+      converters: [
+        {
+          filter: 'div',
+          replacement: function(content) {
+            return '\n' + content + '\n\n';
+          }
+        }
+      ]
+    })
     fs.writeFileSync('result.txt' , result, 'utf8');
 });
 
